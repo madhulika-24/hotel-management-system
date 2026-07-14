@@ -6,25 +6,38 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import com.hotel.util.AppConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * JavaFX App
+ * Application entry point.
+ *
+ * At this stage, App is intentionally a bare-bones JavaFX launcher.
+ * It exists only to prove the foundation (build, dependencies, package
+ * structure) works end-to-end. It does NOT load FXML and does NOT
+ * contain any business/UI logic. Real screens will be wired in through
+ * controllers once feature development begins.
  */
 public class App extends Application {
 
-    @Override
-    public void start(Stage stage) {
-        var javaVersion = SystemInfo.javaVersion();
-        var javafxVersion = SystemInfo.javafxVersion();
+    private static final Logger logger = LoggerFactory.getLogger(App.class);
 
-        var label = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-        var scene = new Scene(new StackPane(label), 640, 480);
-        stage.setScene(scene);
-        stage.show();
+    @Override
+    public void start(Stage primaryStage) {
+        logger.info("Starting {}", AppConstants.APP_NAME);
+
+        Label placeholder = new Label(AppConstants.APP_NAME + " - foundation build OK");
+        StackPane root = new StackPane(placeholder);
+
+        Scene scene = new Scene(root, AppConstants.DEFAULT_WINDOW_WIDTH, AppConstants.DEFAULT_WINDOW_HEIGHT);
+
+        primaryStage.setTitle(AppConstants.APP_NAME);
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     public static void main(String[] args) {
-        launch();
+        launch(args);
     }
-
 }

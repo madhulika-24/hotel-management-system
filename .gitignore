@@ -1,14 +1,17 @@
 # Maven
 target/
 
-# VS Code
+# IDE
 .vscode/
-
-# IntelliJ
 .idea/
+*.iml
 
 # macOS
 .DS_Store
 
-# Java
-*.class
+# SQLite database file — generated at runtime, should not be committed.
+# Each developer/machine gets its own local hotel.db.
+src/main/resources/database/hotel.db
+*.db-journal
+*.db-wal
+*.db-shm
