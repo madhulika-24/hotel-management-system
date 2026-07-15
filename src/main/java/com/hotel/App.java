@@ -1,42 +1,49 @@
 package com.hotel;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import com.hotel.util.AppConstants;
-import com.hotel.database.DatabaseInitializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- * Application entry point.
+ * App.java
  *
- * At this stage, App is intentionally a bare-bones JavaFX launcher.
- * It exists only to prove the foundation (build, dependencies, package
- * structure) works end-to-end. It does NOT load FXML and does NOT
- * contain any business/UI logic. Real screens will be wired in through
- * controllers once feature development begins.
+ * JavaFX entry point.
+ *
+ * MODIFIED: start() now loads login.fxml as the initial screen instead of
+ * whatever placeholder/previous scene it may have loaded before. Your
+ * existing database initialization logic (called before/inside start, or in
+ * main()) should be left exactly as-is — only the scene-loading portion
+ * shown below needs to change in your real App.java.
  */
 public class App extends Application {
 
-    private static final Logger logger = LoggerFactory.getLogger(App.class);
+    private static final Logger LOGGER = Logger.getLogger(App.class.getName());
 
     @Override
     public void start(Stage primaryStage) {
-        DatabaseInitializer.initializeDatabase();
-        logger.info("Starting {}", AppConstants.APP_NAME);
+        try {
+            // NOTE: keep any existing DB initialization calls here, above this line,
+            // exactly as they already are in your project.
 
-        Label placeholder = new Label(AppConstants.APP_NAME + " - foundation build OK");
-        StackPane root = new StackPane(placeholder);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/hotel/view/login.fxml"));
+            Parent root = loader.load();
 
-        Scene scene = new Scene(root, AppConstants.DEFAULT_WINDOW_WIDTH, AppConstants.DEFAULT_WINDOW_HEIGHT);
+            primaryStage.setTitle("Hotel Management System - Login");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.setResizable(false);
+            primaryStage.show();
 
-        primaryStage.setTitle(AppConstants.APP_NAME);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+            LOGGER.info("Application started, login.fxml loaded.");
+
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Failed to load login.fxml", e);
+        }
     }
 
     public static void main(String[] args) {
