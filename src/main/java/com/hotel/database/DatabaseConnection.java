@@ -83,7 +83,7 @@ public final class DatabaseConnection {
      *     }
      * </pre>
      */
-    public static Connection connect() throws SQLException {
+    public static Connection getConnection() throws SQLException {
         String url = AppConstants.JDBC_URL_PREFIX + resolveDatabasePath();
         logger.debug("Opening SQLite connection: {}", url);
         return DriverManager.getConnection(url);

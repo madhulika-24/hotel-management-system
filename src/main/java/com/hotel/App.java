@@ -7,6 +7,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import com.hotel.util.AppConstants;
+import com.hotel.database.DatabaseInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +26,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        DatabaseInitializer.initializeDatabase();
         logger.info("Starting {}", AppConstants.APP_NAME);
 
         Label placeholder = new Label(AppConstants.APP_NAME + " - foundation build OK");
